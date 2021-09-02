@@ -4,14 +4,12 @@ import { Link, useParams } from "react-router-dom";
 
 const Product = ({ state }) => {
   let { productId } = useParams();
+  const { products = [] } = state;
+  console.log(products.filter((obj) => obj.id === 1));
 
-  console.log(state.products);
-  //   console.log(state.products.find(({ id }) => 1 === productId));
-  const { products } = state;
-
-  const { title, price, id, image } = products.find(
-    (product) => product.id === productId
-  );
+  const { title, price, id, image } = products.filter(
+    (product) => product.id === parseInt(productId)
+  )[0];
   console.log(productId);
 
   return (
@@ -23,8 +21,8 @@ const Product = ({ state }) => {
       }}
     >
       <img
-        src={image}
-        alt={title}
+        src={image || ""}
+        alt={title || ""}
         style={{ height: "100px", width: "150px", margin: "16px" }}
       />
       <br />
@@ -32,7 +30,7 @@ const Product = ({ state }) => {
       {productId && (
         <>
           <h3>{productId}</h3>
-          <h5>Price:&nbsp;{price}</h5>
+          <h5>Price:&nbsp;{price || 0}</h5>
           <h5>Quantity:</h5>
           <select name="quantit" id="quantity" defaultValue={"1"}>
             <option value="1">1</option>
